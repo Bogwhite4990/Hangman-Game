@@ -17,3 +17,4 @@ def get_random_word():
 class HangmanGame:
     def __init__(self, master):
       self.none = None
+      self.word = "word"
