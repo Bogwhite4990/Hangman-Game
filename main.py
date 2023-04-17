@@ -135,6 +135,8 @@ class HangmanGame:
         # Save updated leaderboard data to json file
         self.save_leaderboard_data(leaderboard_data[:10])  # Keep only top 10 scores
 
+        # Save name and score msg display
+
     def load_leaderboard_data(self):
         # Load leaderboard data from json file
         try:
@@ -159,9 +161,19 @@ class HangmanGame:
             name_entry = tk.Entry(name_window, font=('Helvetica', 14))
             name_entry.pack(pady=5)
 
+            # Label for displaying saved message
+            saved_label = tk.Label(name_window, text='', font=('Helvetica', 14))
+            saved_label.pack(pady=5)
+
+            # Function to update leaderboard and show saved message
+            def update_leaderboard_and_show_saved_message():
+                name = name_entry.get()
+                self.update_leaderboard(name, score)
+                saved_label.config(text='Name and score have been saved.')
+
             # Button for submitting name
             submit_button = tk.Button(name_window, text='Submit', font=('Helvetica', 14),
-                                      command=lambda: self.update_leaderboard(name_entry.get(), score))
+                                      command=update_leaderboard_and_show_saved_message)
             submit_button.pack(pady=5)
 
             # Close button
