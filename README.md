@@ -1,19 +1,30 @@
 # Hangman Game
 
-This is a simple Hangman game implemented in Python using the tkinter library for the graphical user interface (GUI) and the PIL library for image processing.
+This is a simple implementation of the classic game Hangman in Python.
 
-## Getting Started
+## How to Play
 
-To run the Hangman game, you need to have Python 3 installed on your system. You also need to install the required libraries - tkinter and PIL.
+1. Run the Python script `hangman.py` on your local machine.
+2. The game will select a random word from the list of words provided.
+3. Guess the letters one by one by typing them in the terminal.
+4. If the guessed letter is correct, it will be revealed in the word.
+5. If the guessed letter is incorrect, a part of the hangman figure will be drawn.
+6. Keep guessing letters until you correctly guess the entire word or run out of attempts.
+7. You can customize the number of attempts allowed or the list of words in the script.
 
-You can install the required libraries using the following commands:
+## How to Run
 
-pip install tk
-pip install pillow
+1. Clone this repository to your local machine.
+2. Open a terminal and navigate to the directory where the `hangman.py` script is located.
+3. Run the script using the Python interpreter: `python hangman.py`
+4. Follow the instructions displayed in the terminal to play the game.
 
-Once you have installed the required libraries, you can simply copy the provided code and save it in a Python file with a .py extension. Then you can run the Python file using any Python interpreter.
+## Customization
 
-python hangman_game.py
+You can customize the following variables in the `hangman.py` script:
+
+- `words`: List of words to be used in the game. You can add or remove words as desired.
+- `max_attempts`: Maximum number of attempts allowed for guessing a letter. You can change this value to increase or decrease the difficulty of the game.
 
 ## Game Rules
 
