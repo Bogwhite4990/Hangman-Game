@@ -8,13 +8,11 @@ To run the Hangman game, you need to have Python 3 installed on your system. You
 
 You can install the required libraries using the following commands:
 
-```sh
 pip install tk
 pip install pillow
 
 Once you have installed the required libraries, you can simply copy the provided code and save it in a Python file with a .py extension. Then you can run the Python file using any Python interpreter.
 
-```sh
 python hangman_game.py
 
 ## Game Rules
