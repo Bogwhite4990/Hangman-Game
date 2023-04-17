@@ -1,3 +1,4 @@
+import json
 import tkinter as tk
 from PIL import Image, ImageTk
 # List of words for Hangman
@@ -99,7 +100,76 @@ class HangmanGame:
         self.hint_button.config(state='normal')  # Enable the hint button
 
     def leaderboard_command(self):
-        pass
+        # Create leaderboard window
+        leaderboard_window = tk.Toplevel(self.master)
+        leaderboard_window.title('Leaderboard')
+        leaderboard_window.geometry('300x300')
+
+        # Load leaderboard data from json file
+        leaderboard_data = self.load_leaderboard_data()
+
+        # Sort leaderboard data by score in descending order
+        leaderboard_data.sort(key=lambda x: x['score'], reverse=True)
+
+        # Display top 3 names and scores in leaderboard window
+        top_3_names = []
+        top_3_scores = []
+        for i in range(min(3, len(leaderboard_data))):
+            top_3_names.append(leaderboard_data[i]['name'])
+            top_3_scores.append(leaderboard_data[i]['score'])
+
+        for i in range(len(top_3_names)):
+            label = tk.Label(leaderboard_window, text=f"{i + 1}. {top_3_names[i]}: {top_3_scores[i]}")
+            label.pack()
+
+    def update_leaderboard(self, name, score):
+        # Load leaderboard data from json file
+        leaderboard_data = self.load_leaderboard_data()
+
+        # Add player name and score to leaderboard data
+        leaderboard_data.append({'name': name, 'score': score})
+
+        # Sort leaderboard data by score in descending order
+        leaderboard_data.sort(key=lambda x: x['score'], reverse=True)
+
+        # Save updated leaderboard data to json file
+        self.save_leaderboard_data(leaderboard_data[:10])  # Keep only top 10 scores
+
+    def load_leaderboard_data(self):
+        # Load leaderboard data from json file
+        try:
+            with open('leaderboard.json', 'r') as f:
+                leaderboard_data = json.load(f)
+        except FileNotFoundError:
+            # If json file not found, initialize with an empty list
+            leaderboard_data = []
+        return leaderboard_data
+
+    def update_leaderboard_prompt_name(self, score):
+        if self.guesses_left == -1:
+            # Create a new Toplevel window for entering name
+            name_window = tk.Toplevel(self.master)
+            name_window.title('Enter Your Name')
+            name_window.geometry('300x100')
+
+            # Label and Entry for entering name
+            name_label = tk.Label(name_window, text='Enter Your Name:', font=('Helvetica', 14))
+            name_label.pack(pady=5)
+
+            name_entry = tk.Entry(name_window, font=('Helvetica', 14))
+            name_entry.pack(pady=5)
+
+            # Button for submitting name
+            submit_button = tk.Button(name_window, text='Submit', font=('Helvetica', 14),
+                                      command=lambda: self.update_leaderboard(name_entry.get(), score))
+            submit_button.pack(pady=5)
+        else:
+            self.update_leaderboard('', score)
+
+    def save_leaderboard_data(self, leaderboard_data):
+        # Save leaderboard data to json file
+        with open('leaderboard.json', 'w') as f:
+            json.dump(leaderboard_data, f)
 
     def hint_button(self):
         # Get a random letter from the word that hasn't been guessed yet
@@ -146,6 +216,7 @@ class HangmanGame:
                 if self.guesses_left == -1:
                     self.game_over = tk.Label(self.master, text=f'The word was "{self.word}".')
                     self.game_over.place(x=210, y=450)
+                    self.update_leaderboard_prompt_name(self.score)
                     self.game_over.config(fg='red', font=('Comic Sans MS', 14, 'bold'))
                     self.score = 0
                     self.master.after(4000, self.game_over.destroy)
