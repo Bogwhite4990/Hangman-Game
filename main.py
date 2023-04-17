@@ -119,8 +119,14 @@ class HangmanGame:
             top_3_scores.append(leaderboard_data[i]['score'])
 
         for i in range(len(top_3_names)):
-            label = tk.Label(leaderboard_window, text=f"{i + 1}. {top_3_names[i]}: {top_3_scores[i]}")
-            label.pack()
+            label = tk.Label(leaderboard_window, text=f"{i + 1}. {top_3_names[i]}: {top_3_scores[i]}",
+                             font=('Helvetica', 14))
+            label.pack(pady=5)
+
+        # Close button
+        close_button = tk.Button(leaderboard_window, text='Close', font=('Helvetica', 14),
+                                 command=lambda: leaderboard_window.destroy())
+        close_button.pack(pady=30)
 
     def update_leaderboard(self, name, score):
         # Load leaderboard data from json file
