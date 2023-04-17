@@ -150,7 +150,7 @@ class HangmanGame:
             # Create a new Toplevel window for entering name
             name_window = tk.Toplevel(self.master)
             name_window.title('Enter Your Name')
-            name_window.geometry('300x100')
+            name_window.geometry('300x200')
 
             # Label and Entry for entering name
             name_label = tk.Label(name_window, text='Enter Your Name:', font=('Helvetica', 14))
@@ -163,6 +163,11 @@ class HangmanGame:
             submit_button = tk.Button(name_window, text='Submit', font=('Helvetica', 14),
                                       command=lambda: self.update_leaderboard(name_entry.get(), score))
             submit_button.pack(pady=5)
+
+            # Close button
+            close_button = tk.Button(name_window, text='Close', font=('Helvetica', 14),
+                                      command=lambda: name_window.destroy())
+            close_button.pack(pady=5)
         else:
             self.update_leaderboard('', score)
 
